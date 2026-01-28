@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { NAV_LINKS, INSTAPAY_INFO, DOCTOR_NAME, DOCTOR_SLOGAN } from '../constants';
+import { NAV_LINKS, INSTAPAY_INFO, DOCTOR_NAME, DOCTOR_SLOGAN } from '../constants.tsx';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +16,7 @@ const Navbar: React.FC = () => {
 
   const handleInstaPay = () => {
     navigator.clipboard.writeText(INSTAPAY_INFO);
-    alert(`عنوان InstaPay الخاص بالدكتور هو: ${INSTAPAY_INFO}\nتم نسخ العنوان لسهولة الدفع.`);
+    alert("عنوان InstaPay الخاص بالدكتور هو: " + INSTAPAY_INFO + "\nتم نسخ العنوان لسهولة الدفع.");
   };
 
   return (

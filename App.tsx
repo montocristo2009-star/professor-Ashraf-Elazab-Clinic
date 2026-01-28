@@ -1,15 +1,14 @@
 
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
-import SocialSidebar from './components/SocialSidebar';
-import AIChatWidget from './components/AIChatWidget';
-import Home from './pages/Home';
-import About from './pages/About';
-import Booking from './pages/Booking';
-import Blog from './pages/Blog';
-import Testimonials from './pages/Testimonials';
+import Navbar from './components/Navbar.tsx';
+import Footer from './components/Footer.tsx';
+import SocialSidebar from './components/SocialSidebar.tsx';
+import Home from './pages/Home.tsx';
+import About from './pages/About.tsx';
+import Booking from './pages/Booking.tsx';
+import Blog from './pages/Blog.tsx';
+import Testimonials from './pages/Testimonials.tsx';
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -26,8 +25,9 @@ const App: React.FC = () => {
       <div className="flex flex-col min-h-screen bg-white font-cairo" dir="rtl">
         <Navbar />
         <SocialSidebar />
-        <AIChatWidget />
-
+        
+        {/* تم إزالة كافة أدوات المحادثة الفورية والذكية بناءً على الطلب */}
+        
         <main className="flex-grow pt-0">
           <Routes>
             <Route path="/" element={<Home />} />
