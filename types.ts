@@ -1,4 +1,3 @@
-
 export interface Service {
   id: string;
   title: string;
@@ -15,6 +14,7 @@ export interface BlogPost {
   category: string;
   date: string;
   icon: string;
+  imageUrl?: string;
 }
 
 export interface NavLink {
@@ -34,4 +34,13 @@ export interface AcademicStat {
   label: string;
   value: string;
   icon: string;
+}
+
+export interface Review {
+  id: string;
+  patientName: string;
+  text: string;
+  rating: number;
+  source: string;
+  date: string;
 }

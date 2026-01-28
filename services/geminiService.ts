@@ -1,26 +1,88 @@
 
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenAI, GenerateContentResponse } from "@google/genai";
 
-export const getMedicalAdvice = async (condition: string) => {
-  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+export interface ChatMessage {
+  role: 'user' | 'model';
+  text: string;
+}
+
+const SYSTEM_INSTRUCTION = `أنت "مساعد د. أشرف العزب الذكي". الدكتور أشرف استشاري جراحة العظام والمناظير وحاصل على الدكتوراة من جامعة القاهرة والزمالة الأوروبية (EBOT).
+معلومات عن خدمات العيادة:
+1. متخصص في جراحات الركبة والمناظير والرباط الصليبي وإصلاح الغضروف الهلالي.
+2. يستخدم تقنيات التدخل المحدود الحديثة لإصلاح وتر أكيلس بفتحة 2 سم.
+3. يعالج خلع الكتف المتكرر (Bankart & Latarjet) وتوصيل أوتار الكتف بالمنظار.
+4. يعالج الخشونة بالحقن الجيلاتيني والتردد الحراري وحقن البلازما (PRP).
+5. خبير في علاج حالات عدم التئام الكسور والكسور المعقدة والمفاصل الصناعية.
+الخلفية العلمية: دكتوراة جامعة القاهرة، ألمانيا، جنيف، كوريا، والبورد الأوروبي.
+تعليمات الرد: تحدث بلغة مهنية محترمة (عامية مصرية مهذبة). لا تستخدم كلمة "سبيد بريدج" إطلاقاً. ممنوع كتابة أي أدوية. أكد دائماً على أهمية الكشف السريري.`;
+
+export const getMedicalAdvice = async (history: ChatMessage[], useSearch = false, useMaps = false) => {
   try {
-    const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
-      contents: `المريض يسأل: ${condition}`,
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    let modelName = 'gemini-3-flash-preview';
+    const tools: any[] = [];
+    
+    if (useSearch) tools.push({ googleSearch: {} });
+    if (useMaps) {
+      modelName = 'gemini-2.5-flash'; 
+      tools.push({ googleMaps: {} });
+    }
+
+    const contents = history.map(m => ({
+      role: m.role,
+      parts: [{ text: m.text }]
+    }));
+
+    const response: GenerateContentResponse = await ai.models.generateContent({
+      model: modelName,
+      contents: contents,
       config: {
-        systemInstruction: `أنت المساعد الذكي للأستاذ الدكتور أشرف العزب، استشاري جراحة العظام الحاصل على دكتوراة قصر العيني والبورد الأوروبي وزمالات ألمانيا وسويسرا.
-        مهمتك:
-        1. الرد بالعامية المصرية الودودة والمحترمة.
-        2. شرح المشكلة بشكل بسيط جداً.
-        3. التأكيد على أن التشخيص النهائي يتطلب كشفاً سريرياً عند الدكتور أشرف.
-        4. لا تصف أدوية أو جرعات أبداً.
-        5. ركز على أن الدكتور لديه خبرة 20 سنة في أدق الجراحات.`,
-        temperature: 0.7,
+        systemInstruction: SYSTEM_INSTRUCTION,
+        tools: tools.length > 0 ? tools : undefined,
       }
     });
-    return response.text || "يرجى مراجعة العيادة للحصول على تشخيص دقيق من الدكتور أشرف.";
+
+    return {
+      text: response.text || "أهلاً بك، كيف يمكنني مساعدتك؟",
+      grounding: response.candidates?.[0]?.groundingMetadata?.groundingChunks || []
+    };
   } catch (error) {
     console.error("AI Error:", error);
-    return "المساعد الذكي مشغول حالياً، يرجى التواصل مع العيادة هاتفياً للحصول على أفضل توجيه.";
+    return { text: "نعتذر، هناك عطل مؤقت.. يرجى المحاولة لاحقاً.", grounding: [] };
+  }
+};
+
+export const generateClinicIntroVideo = async (imageBuffer: string) => {
+  try {
+    const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+    const prompt = "A professional, cinematic introductory video for Dr. Ashraf El Azab's orthopedic clinic, focusing on medical excellence and trust.";
+    
+    let operation = await ai.models.generateVideos({
+      model: 'veo-3.1-fast-generate-preview',
+      prompt: prompt,
+      image: {
+        imageBytes: imageBuffer,
+        mimeType: 'image/jpeg',
+      },
+      config: {
+        numberOfVideos: 1,
+        resolution: '1080p',
+        aspectRatio: '16:9'
+      }
+    });
+
+    while (!operation.done) {
+      await new Promise(resolve => setTimeout(resolve, 10000));
+      const aiPolling = new GoogleGenAI({ apiKey: process.env.API_KEY });
+      operation = await aiPolling.operations.getVideosOperation({ operation: operation });
+    }
+
+    const downloadLink = operation.response?.generatedVideos?.[0]?.video?.uri;
+    const fetchResponse = await fetch(`${downloadLink}&key=${process.env.API_KEY}`);
+    const blob = await fetchResponse.blob();
+    return URL.createObjectURL(blob);
+  } catch (error) {
+    console.error("Intro Video Error:", error);
+    throw error;
   }
 };

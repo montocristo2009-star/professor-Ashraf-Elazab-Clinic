@@ -1,11 +1,10 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>أ.د. أشرف العزب | استشاري جراحة العظام والمناظير</title>
-    <meta name="description" content="الموقع الرسمي للأستاذ الدكتور أشرف العزب - متخصص جراحات الركبة والمناظير وإصابات الملاعب والكسور المعقدة.">
+    <title>أ.د. أشرف العزب | دكتوراة جراحة العظام والمناظير</title>
+    <meta name="description" content="الموقع الرسمي للأستاذ الدكتور أشرف العزب - دكتوراة جراحة العظام والمناظير - جامعة القاهرة.">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,9 +19,10 @@
             colors: {
               medical: {
                 blue: '#0F172A',
-                lightBlue: '#3B82F6',
+                lightBlue: '#1E293B',
                 green: '#10B981',
-                darkGreen: '#065F46',
+                darkGreen: '#064E3B',
+                accent: '#F1F5F9',
               }
             },
             fontFamily: {
@@ -33,27 +33,37 @@
       };
     </script>
     <style>
-      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar { width: 6px; }
       ::-webkit-scrollbar-track { background: #f8fafc; }
-      ::-webkit-scrollbar-thumb { background: #10B981; border-radius: 10px; }
+      ::-webkit-scrollbar-thumb { background: #0F172A; border-radius: 10px; }
       
-      body { font-family: 'Cairo', sans-serif; scroll-behavior: smooth; }
-      
-      @keyframes pulse-green {
-        0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
-        70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(16, 185, 129, 0); }
-        100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+      body { 
+        font-family: 'Cairo', sans-serif; 
+        scroll-behavior: smooth; 
+        background-color: #FFFFFF;
+        color: #1E293B;
       }
-      .animate-pulse-green { animation: pulse-green 2s infinite; }
+      
+      .glass-card {
+        background: rgba(255, 255, 255, 0.8);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(241, 245, 249, 1);
+      }
 
-      @keyframes slide-up {
-        from { transform: translateY(30px); opacity: 0; }
+      @keyframes fade-in-up {
+        from { transform: translateY(20px); opacity: 0; }
         to { transform: translateY(0); opacity: 1; }
       }
-      .animate-slide-up { animation: slide-up 0.8s ease-out forwards; }
+      .animate-fade-in-up { animation: fade-in-up 0.6s ease-out forwards; }
       
       .doctor-portrait-frame {
-        box-shadow: 0 50px 100px -20px rgba(15, 23, 42, 0.25), 0 30px 60px -30px rgba(16, 185, 129, 0.3);
+        box-shadow: 0 40px 80px -15px rgba(15, 23, 42, 0.15);
+        border-radius: 40px 120px 40px 40px;
+      }
+
+      .nav-blur {
+        backdrop-filter: blur(20px);
+        background: rgba(255, 255, 255, 0.85);
       }
     </style>
     
@@ -71,9 +81,8 @@
     }
     </script>
   </head>
-  <body class="overflow-x-hidden antialiased text-slate-900 bg-white">
+  <body class="overflow-x-hidden antialiased">
     <div id="root"></div>
-    <!-- تم تعديل المسار لضمان عمل Vite على Netlify -->
     <script type="module" src="./index.tsx"></script>
   </body>
 </html>
