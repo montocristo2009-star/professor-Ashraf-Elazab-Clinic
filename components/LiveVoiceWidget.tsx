@@ -1,7 +1,7 @@
 
 import React, { useState, useCallback } from 'react';
 import { GoogleGenAI, Modality, LiveServerMessage } from '@google/genai';
-import { DOCTOR_NAME } from '../constants';
+import { DOCTOR_NAME } from '../constants.tsx';
 
 const LiveVoiceWidget: React.FC = () => {
   const [isActive, setIsActive] = useState(false);

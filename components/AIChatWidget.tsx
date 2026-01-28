@@ -1,7 +1,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { getMedicalAdvice, ChatMessage } from '../services/geminiService';
-import { DOCTOR_NAME } from '../constants';
+import { getMedicalAdvice, ChatMessage } from '../services/geminiService.ts';
+import { DOCTOR_NAME } from '../constants.tsx';
 
 const AIChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);

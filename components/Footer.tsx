@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   YOUTUBE_URL, 
@@ -13,13 +12,13 @@ import {
   INSTAGRAM_URL,
   INSTAPAY_INFO,
   INSTAPAY_QR_CODE
-} from '../constants';
+} from '../constants.tsx';
 
 const Footer: React.FC = () => {
   const handleInstaPay = (e: React.MouseEvent) => {
     e.preventDefault();
     navigator.clipboard.writeText(INSTAPAY_INFO);
-    alert(`عنوان InstaPay الخاص بالدكتور هو: ${INSTAPAY_INFO}\nتم نسخ العنوان لسهولة الدفع.`);
+    alert("عنوان InstaPay الخاص بالدكتور هو: " + INSTAPAY_INFO + "\nتم نسخ العنوان لسهولة الدفع.");
   };
 
   const socialLinks = [
@@ -94,7 +93,7 @@ const Footer: React.FC = () => {
             <div className="space-y-6">
               <div className="block p-6 rounded-3xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors group">
                 <p className="text-xs text-slate-500 mb-2">للحجز والاستفسار</p>
-                <a href={`tel:${PHONE_CAIRO}`} className="text-2xl font-black tracking-widest block group-hover:text-medical-green transition-colors">{PHONE_CAIRO}</a>
+                <a href={"tel:" + PHONE_CAIRO} className="text-2xl font-black tracking-widest block group-hover:text-medical-green transition-colors">{PHONE_CAIRO}</a>
               </div>
               <div className="block p-6 rounded-3xl bg-white/5 border border-white/5">
                 <p className="text-xs text-slate-500 mb-2">مواعيد العمل</p>

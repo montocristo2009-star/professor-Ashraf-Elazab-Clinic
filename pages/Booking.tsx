@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { PHONE_CAIRO, PHONE_MANSOURA, PHONE_SENBELLAWEIN } from '../constants';
+import { PHONE_CAIRO, PHONE_MANSOURA, PHONE_SENBELLAWEIN } from '../constants.tsx';
 
 const Booking: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);

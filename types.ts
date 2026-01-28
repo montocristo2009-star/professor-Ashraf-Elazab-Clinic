@@ -1,3 +1,5 @@
+export const APP_TYPES_VERSION = "1.0.0";
+
 export interface Service {
   id: string;
   title: string;

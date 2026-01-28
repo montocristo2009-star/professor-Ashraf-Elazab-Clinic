@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { 
@@ -8,8 +7,8 @@ import {
   DOCTOR_SLOGAN,
   TRUST_MESSAGE,
   DOCTOR_IMAGE_URL 
-} from '../constants';
-import { Service } from '../types';
+} from '../constants.tsx';
+import { Service } from '../types.ts';
 
 const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
   const [isExpanded, setIsExpanded] = useState(false);

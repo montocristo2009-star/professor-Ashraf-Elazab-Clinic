@@ -5,7 +5,7 @@ import {
   INSTAGRAM_URL, 
   TIKTOK_URL,
   WHATSAPP_URL
-} from '../constants';
+} from '../constants.tsx';
 
 const SocialSidebar: React.FC = () => {
   const handleShare = async () => {

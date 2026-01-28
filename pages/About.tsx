@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { 
   ACADEMIC_CREDENTIALS,
@@ -9,7 +8,7 @@ import {
   DOCTOR_NAME,
   TRUST_MESSAGE,
   DOCTOR_IMAGE_URL 
-} from '../constants';
+} from '../constants.tsx';
 
 const About: React.FC = () => {
   return (

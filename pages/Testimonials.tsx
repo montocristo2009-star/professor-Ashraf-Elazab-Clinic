@@ -1,6 +1,5 @@
-
 import React from 'react';
-import { REVIEWS, DOCTOR_NAME } from '../constants';
+import { REVIEWS, DOCTOR_NAME } from '../constants.tsx';
 import { Link } from 'react-router-dom';
 
 const TestimonialCard: React.FC<{ review: any }> = ({ review }) => (

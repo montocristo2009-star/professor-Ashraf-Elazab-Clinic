@@ -1,4 +1,3 @@
-
 import React, { useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar.tsx';
@@ -25,8 +24,6 @@ const App: React.FC = () => {
       <div className="flex flex-col min-h-screen bg-white font-cairo" dir="rtl">
         <Navbar />
         <SocialSidebar />
-        
-        {/* تم إزالة كافة أدوات المحادثة الفورية والذكية بناءً على الطلب */}
         
         <main className="flex-grow pt-0">
           <Routes>

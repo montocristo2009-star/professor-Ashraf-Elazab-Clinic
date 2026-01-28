@@ -1,7 +1,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
-import { BLOG_POSTS, DOCTOR_IMAGE_URL, DOCTOR_NAME } from '../constants';
-import { BlogPost } from '../types';
+import { BLOG_POSTS, DOCTOR_IMAGE_URL, DOCTOR_NAME } from '../constants.tsx';
+import { BlogPost } from '../types.ts';
 
 const POSTS_PER_PAGE = 6;
 
@@ -197,7 +197,6 @@ const Blog: React.FC = () => {
           </div>
         )}
 
-        {/* Modal remains the same */}
         {selectedPost && (
           <div className="fixed inset-0 z-[2000] flex items-center justify-center p-6 bg-medical-blue/80 backdrop-blur-md">
             <div className="bg-white w-full max-w-3xl rounded-[60px] shadow-2xl overflow-hidden max-h-[90vh] flex flex-col relative animate-fade-in-up">
