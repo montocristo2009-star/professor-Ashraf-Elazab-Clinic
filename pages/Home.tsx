@@ -9,9 +9,11 @@ import {
   DOCTOR_IMAGE_URL 
 } from '../constants.tsx';
 import { Service } from '../types.ts';
+import AIChatWidget from './AIChatWidget'; // تأكد أن المسار صحيح
 
 const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
   const [isExpanded, setIsExpanded] = useState(false);
+
   return (
     <div className={`glass-card p-8 rounded-[40px] shadow-sm transition-all duration-500 flex flex-col h-full group ${isExpanded ? 'ring-2 ring-medical-green shadow-2xl bg-white' : 'hover:shadow-xl hover:-translate-y-2'}`}>
       <div className="text-4xl mb-6 bg-slate-50 w-16 h-16 flex items-center justify-center rounded-2xl group-hover:bg-medical-blue group-hover:text-white transition-all duration-500 shadow-inner">
@@ -31,7 +33,9 @@ const ServiceCard: React.FC<{ service: Service }> = ({ service }) => {
         className="mt-auto text-medical-green font-black text-[12px] uppercase tracking-widest flex items-center gap-2 self-start hover:gap-3 transition-all"
       >
         <span>{isExpanded ? 'إغلاق التفاصيل' : 'اقرأ المزيد'}</span>
-        <svg className={`w-4 h-4 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7"/></svg>
+        <svg className={`w-4 h-4 transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M19 9l-7 7-7-7"/>
+        </svg>
       </button>
     </div>
   );
@@ -123,6 +127,9 @@ const Home: React.FC = () => {
           </div>
         </div>
       </section>
+
+      {/* AI Chat Widget */}
+      <AIChatWidget />
     </div>
   );
 };
