@@ -1,11 +1,10 @@
-
 import React, { useState, useRef, useEffect } from 'react';
-import { getMedicalAdvice, ChatMessage } from '../services/geminiService.ts';
+import { getMedicalAdvice, ChatMessage } from '../services/fakeService';
 import { DOCTOR_NAME } from '../constants.tsx';
 
 const AIChatWidget: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState<(ChatMessage & { grounding?: any[] })[]>([
+  const [messages, setMessages] = useState<ChatMessage[]>([
     { role: 'model', text: `أهلاً بك! أنا المساعد الذكي لـ ${DOCTOR_NAME}. كيف يمكنني مساعدتك اليوم؟` }
   ]);
   const [input, setInput] = useState('');
@@ -28,16 +27,13 @@ const AIChatWidget: React.FC = () => {
     setInput('');
     setIsLoading(true);
 
-    const useSearch = input.includes('أخبار') || input.includes('جديد');
-    const useMaps = input.includes('فرع') || input.includes('مكان') || input.includes('عنوان');
-
     try {
       const history = messages.map(({ role, text }) => ({ role, text }));
       history.push(userMsg);
-      const response = await getMedicalAdvice(history, useSearch, useMaps);
-      setMessages(prev => [...prev, { role: 'model', text: response.text, grounding: response.grounding }]);
-    } catch (error) {
-      setMessages(prev => [...prev, { role: 'model', text: 'عذراً، حدث خطأ تقني في المساعد الذكي.' }]);
+      const response = await getMedicalAdvice(history, false, false);
+      setMessages(prev => [...prev, { role: 'model', text: response.text }]);
+    } catch {
+      setMessages(prev => [...prev, { role: 'model', text: 'عذراً، حدث خطأ تقني.' }]);
     } finally {
       setIsLoading(false);
     }
@@ -70,16 +66,6 @@ const AIChatWidget: React.FC = () => {
               <div key={i} className={`flex ${msg.role === 'user' ? 'justify-start' : 'justify-end'}`}>
                 <div className={`max-w-[85%] p-4 rounded-[20px] text-sm font-bold shadow-sm ${msg.role === 'user' ? 'bg-medical-blue text-white' : 'bg-white text-slate-800'}`}>
                   {msg.text}
-                  {msg.grounding && msg.grounding.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-slate-100 space-y-2">
-                      <p className="text-[9px] font-black text-medical-green uppercase tracking-widest">المصادر:</p>
-                      {msg.grounding.map((chunk: any, idx: number) => (
-                        <a key={idx} href={chunk.web?.uri || chunk.maps?.uri} target="_blank" rel="noopener noreferrer" className="block text-[10px] text-medical-blue underline truncate">
-                          {chunk.web?.title || chunk.maps?.title || 'رابط خارجي'}
-                        </a>
-                      ))}
-                    </div>
-                  )}
                 </div>
               </div>
             ))}
@@ -105,9 +91,7 @@ const AIChatWidget: React.FC = () => {
                 className="flex-grow bg-transparent border-none rounded-xl px-4 py-2 font-bold text-sm outline-none focus:ring-0"
               />
               <button onClick={handleSend} disabled={isLoading || !input.trim()} className="bg-medical-blue text-white p-3 rounded-xl disabled:opacity-50 transition-all hover:bg-medical-green">
-                <svg className="w-5 h-5 rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M14 5l7 7m0 0l-7 7m7-7H3" />
-                </svg>
+                إرسال
               </button>
             </div>
           </div>
